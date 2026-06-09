@@ -51,7 +51,8 @@ src/main/java/com/fiap/mecatronica/baselunar/
 │   ├── Reservatorio.java
 │   ├── ConsumoEnergia.java
 │   ├── Climatizacao.java
-│   └── AlertaOperacional.java
+│   ├── AlertaOperacional.java
+│   └── Recurso.java                 # recurso consumido pelo app mobile
 ├── repository/                      # interfaces JpaRepository
 ├── service/                         # regras de negócio
 ├── controller/                      # endpoints REST
@@ -106,6 +107,33 @@ automaticamente com dados de exemplo.
 ## Endpoints (testáveis via Postman / Insomnia)
 
 Todos os recursos expõem CRUD completo. URL base: `http://localhost:8080`
+
+### Recursos (consumido pelo app mobile) — `/api/recursos`
+Endpoint usado diretamente pelo aplicativo mobile (disciplina *Advanced Programming
+And Mobile Dev*). Mantém um modelo simples (`nome`, `tipo`, `nivelAtual`, `status`)
+no formato esperado pelas telas Home, Cadastro e Alertas.
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/api/recursos` | Lista todos (tela Home) |
+| GET | `/api/recursos/{id}` | Busca por id |
+| GET | `/api/recursos/status/{status}` | Filtra por status (NORMAL/CRITICO) — usado nos Alertas |
+| GET | `/api/recursos/tipo/{tipo}` | Filtra por tipo/categoria |
+| POST | `/api/recursos` | Cadastra (tela Cadastro) |
+| PUT | `/api/recursos/{id}` | Atualiza |
+| DELETE | `/api/recursos/{id}` | Remove |
+
+**Exemplo de corpo (POST `/api/recursos`):**
+```json
+{
+  "nome": "Tanque de Agua Setor Alpha",
+  "tipo": "Agua",
+  "nivelAtual": 85.0,
+  "status": "NORMAL"
+}
+```
+> Se o campo `status` não for enviado, a API o calcula a partir do `nivelAtual`
+> (abaixo de 20% = `CRITICO`), seguindo a mesma regra do aplicativo mobile.
 
 ### Sensores — `/api/sensores`
 | Método | Rota | Descrição |
