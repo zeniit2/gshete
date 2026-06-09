@@ -1,0 +1,17 @@
+GLOBAL SOLUTION - TECNICAS AVANCADAS DE PROGRAMACAO
+Monitoramento de Recursos da Base Lunar - API Backend
+FIAP - Engenharia Mecatronica - 2o ano
+
+INTEGRANTES:
+- RM564021 - Mateus Hipolito Bustamante
+- RM565268 - Erick Lima Barbosa
+- RM565575 - Pedro Lopez
+
+LINK DO REPOSITORIO GITHUB:
+<<< SUBSTITUIR PELO LINK DO REPOSITORIO APOS O PUSH, ex.: https://github.com/seu-usuario/base-lunar-api >>>
+
+OBSERVACOES:
+- API em Java com Spring Boot, arquitetura em camadas (Controller, Service, Repository, Model).
+- Persistencia em banco H2 em modo file (arquivo ./database/base-lunar-db.mv.db).
+- CRUD completo para: sensores, reservatorios, consumo de energia, climatizacao e alertas operacionais.
+- Endpoints REST testaveis via Postman/Insomnia (URL base http://localhost:8080).
