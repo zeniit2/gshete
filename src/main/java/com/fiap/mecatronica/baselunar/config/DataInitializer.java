@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import com.fiap.mecatronica.baselunar.model.AlertaOperacional;
 import com.fiap.mecatronica.baselunar.model.Climatizacao;
 import com.fiap.mecatronica.baselunar.model.ConsumoEnergia;
+import com.fiap.mecatronica.baselunar.model.Recurso;
 import com.fiap.mecatronica.baselunar.model.Reservatorio;
 import com.fiap.mecatronica.baselunar.model.Sensor;
 import com.fiap.mecatronica.baselunar.repository.AlertaOperacionalRepository;
 import com.fiap.mecatronica.baselunar.repository.ClimatizacaoRepository;
 import com.fiap.mecatronica.baselunar.repository.ConsumoEnergiaRepository;
+import com.fiap.mecatronica.baselunar.repository.RecursoRepository;
 import com.fiap.mecatronica.baselunar.repository.ReservatorioRepository;
 import com.fiap.mecatronica.baselunar.repository.SensorRepository;
 
@@ -38,6 +40,9 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private AlertaOperacionalRepository alertaRepository;
 
+    @Autowired
+    private RecursoRepository recursoRepository;
+
     @Override
     public void run(String... args) {
         if (sensorRepository.count() > 0) {
@@ -52,6 +57,7 @@ public class DataInitializer implements CommandLineRunner {
         carregarConsumosEnergia();
         carregarClimatizacoes();
         carregarAlertas();
+        carregarRecursos();
 
         System.out.println("Carga inicial concluida. Base Lunar pronta para monitoramento.");
     }
@@ -118,5 +124,16 @@ public class DataInitializer implements CommandLineRunner {
                 "Verificacao de rotina concluida",
                 "Inspecao diaria dos sensores de oxigenio concluida sem anomalias.",
                 "baixo", "Sensor - Modulo de Habitacao A", true));
+    }
+
+    /**
+     * Recursos no formato consumido pelo aplicativo mobile (/api/recursos).
+     */
+    private void carregarRecursos() {
+        recursoRepository.save(new Recurso("Tanque de Agua Setor Alpha", "Agua", 85.0, "NORMAL"));
+        recursoRepository.save(new Recurso("Painel Solar Norte", "Energia", 15.0, "CRITICO"));
+        recursoRepository.save(new Recurso("Reserva de Oxigenio Principal", "Oxigenio", 72.0, "NORMAL"));
+        recursoRepository.save(new Recurso("Climatizador Estufa Hidroponica", "Climatizacao", 18.0, "CRITICO"));
+        recursoRepository.save(new Recurso("Banco de Baterias Reserva", "Energia", 60.0, "NORMAL"));
     }
 }
